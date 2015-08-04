@@ -3,6 +3,11 @@ Norest::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   get "home" => "home#index", :as => "home"
+  get "original" => "home#original", :as => "original"
+  get "pattern1" => "home#pattern1", :as => "pattern1"
+  get "pattern2" => "home#pattern2", :as => "pattern2"
+  get "pattern3" => "home#pattern3", :as => "pattern3"
+  get "custom" => "home#custom", :as => "custom"
   
   # You can have the root of your site routed with "root"
   root 'home#index'
