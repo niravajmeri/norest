@@ -7,6 +7,10 @@ Norest::Application.routes.draw do
   get "pattern1" => "home#pattern1", :as => "pattern1"
   get "pattern2" => "home#pattern2", :as => "pattern2"
   get "pattern3" => "home#pattern3", :as => "pattern3"
+
+  get "custom_norms" => "home#custom_norms", :as => "custom_norms"
+  post "execute_custom_norms" => "home#execute_custom_norms", :as => "execute_custom_norms"
+
   get "custom" => "home#custom", :as => "custom"
   post "execute_nusmv" => "home#execute_nusmv", :as => "execute_nusmv"
   
