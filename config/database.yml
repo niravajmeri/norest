@@ -12,7 +12,7 @@ development:
   adapter: mysql
   database: norest_development
   username: root
-  password:
+  password: qwerty
   host: localhost
 
 # Warning: The database defined as "test" will be erased and
@@ -22,12 +22,12 @@ test:
   adapter: mysql
   database: norest_test
   username: root
-  password:
+  password: qwerty
   host: localhost
 
 production:
   adapter: mysql
   database: norest_production
   username: root
-  password:
+  password: qwerty
   host: localhost
