@@ -7,7 +7,7 @@ gem 'rails', '4.0.0'
 gem 'activerecord-jdbcmysql-adapter'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+#gem 'sass-rails', '~> 4.0.0' #Commented for bootstrap-sass to work
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -41,3 +41,5 @@ end
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'
