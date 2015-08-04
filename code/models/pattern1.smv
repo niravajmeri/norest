@@ -1,0 +1,121 @@
+MODULE p(role1, role2, antecedent, consequent, deadline)
+
+CONSTANTS CONDITIONAL, ACTIVE, FULFILLED, VIOLATED;
+
+DEFINE
+	subject:= role1;
+	object:= role2;
+
+	status:= 
+		case
+			!antecedent: CONDITIONAL;
+			antecedent & !consequent & !deadline: ACTIVE;
+			antecedent & !consequent & deadline: FULFILLED;
+			antecedent & consequent & !deadline: VIOLATED;
+		esac;
+
+MODULE a(role1, role2, antecedent, consequent, deadline)
+
+CONSTANTS CONDITIONAL, ACTIVE, FULFILLED, VIOLATED;
+
+DEFINE
+	subject:= role1;
+	object:= role2;
+
+	status:= 
+		case
+			!antecedent: CONDITIONAL;
+			antecedent & !consequent & !deadline: ACTIVE;
+			!antecedent & consequent: VIOLATED;
+			TRUE: FULFILLED;
+		esac;
+
+MODULE c(role1, role2, antecedent, consequent, deadline)
+
+CONSTANTS CONDITIONAL, ACTIVE, FULFILLED, VIOLATED;
+
+DEFINE
+	subject:= role1;
+	object:= role2;
+
+	status:= 
+		case
+			!antecedent: CONDITIONAL;
+			antecedent & !consequent & !deadline: ACTIVE;
+			antecedent & consequent & !deadline: FULFILLED;
+			antecedent & !consequent & deadline: VIOLATED;
+		esac;
+
+MODULE main
+
+VAR
+	emergency: boolean;
+	consent: boolean;
+	records: boolean;
+	disclosed: boolean;
+
+	r1: {physician, hospital};
+	r2: {physician, hospital};
+
+	p1: p(r1, r2, !consent & !emergency, records, FALSE);
+	a1: a(r1, r2, emergency, records, FALSE);
+
+ASSIGN
+	init(emergency):= FALSE;
+	init(consent):= FALSE;
+	init(records):= FALSE;
+	init(disclosed):= FALSE;
+
+	init(r1):= physician;
+	init(r2):= hospital;
+
+	next(r1):= physician;
+	next(r2):= hospital;
+
+----------------------
+-- domain knowledge --
+----------------------
+
+	next(disclosed):=
+		case
+			records: {TRUE, FALSE}; -- entailment rule --
+			TRUE: FALSE;
+		esac;
+
+	next(consent):=
+		case
+			consent: TRUE; -- monotonicity rule --
+			TRUE: {TRUE, FALSE};
+		esac;
+
+-----------
+-- norms --
+-----------
+
+	next(records):=
+		case
+			!consent & !emergency: FALSE; -- from p1 --
+			!emergency: FALSE; -- from a1 --		
+			emergency: {TRUE, FALSE}; -- from a1 --
+			TRUE: {TRUE, FALSE};
+		esac;
+
+----------------
+-- properties --
+----------------
+
+-- prop1 = false
+SPEC	
+	EF (!consent & records);
+
+-- prop2 = false
+SPEC	
+	EF (!consent & disclosed);
+
+-- prop3 = true
+SPEC	
+	EF ((emergency & !consent) & records);
+
+-- prop4 = true
+SPEC	
+	AG (records -> AF consent);

@@ -1,0 +1,28 @@
+MODULE main
+
+VAR
+	consent_promise: boolean;
+	emergency_consent: boolean;
+	emergency_end: boolean;
+	records: boolean;
+
+	r1: {patient, doctor, hospital};
+	r2: {patient, doctor, hospital};
+
+	a1: authorization(r1, r2, emergency_consent, records, emergency_end);
+
+ASSIGN
+	init(consent_promise):= FALSE;
+	init(records):= FALSE;
+	init(r1):= doctor;
+	init(r2):= hospital;
+
+	next(consent_promise):= {TRUE, FALSE};
+	next(r1):= doctor;
+	next(r2):= hospital;
+
+	next(records):=
+		case
+			a1.status = ACTIVE: TRUE;
+			TRUE: FALSE;
+		esac;

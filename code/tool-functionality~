@@ -1,0 +1,25 @@
+4 panels for the interface:
+
+* Config panel:
+	- folders (NuSMV binary, models)
+	- buttons to add / combine models (norms, software spec, agents)
+
+* Agents panel:
+	- separate tabs for each added agent model (+ software spec) as well as combined models
+
+* Results panel:
+	- verification results for each property
+	- show suggestions for properties that do not hold
+
+	Correct: true
+	Confidential: false
+		add action X button
+		Rerun button
+
+	Private(patient): true
+	Functional(hospital): true
+	Private(globally): false
+
+* Output panel:
+	- show NuSMV console output
+	- show errors

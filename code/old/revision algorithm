@@ -1,0 +1,26 @@
+Desired state: ((emergency & !patient_consent) & records)
+
+Counter-example: property is false
+[0] -> State X.1 <-
+[1]  emergency = FALSE
+[OK] patient_consent = FALSE
+[2]  records = FALSE
+
+------------------------------------
+
+[0] gets stuck at initial state, means you need new transition rules
+
+[1] check transition rule: has random transition, does not depend on related variables [OK]
+
+[2] check transition rule: records depends on consent, consent depends on patient_consent
+
+- add new transition rule (records) [OK]
+
+- add new transition rule (consent) [OK]
+
+- add new transition rule (patient_consent) [NO] has to be false
+
+- alternatives to add:
+
+(i)  emergency, emergency_consent (available variables)
+(ii) a1, c1 (norms with consequents that lead to desired property)

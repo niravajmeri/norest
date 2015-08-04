@@ -1,0 +1,47 @@
+MODULE prohibition(role1, role2, antecedent, consequent, deadline)
+
+CONSTANTS CONDITIONAL, ACTIVE, FULFILLED, VIOLATED;
+
+DEFINE
+	subject:= role1;
+	object:= role2;
+
+	status:= 
+		case
+			!antecedent: CONDITIONAL;
+			antecedent & !consequent & !deadline: ACTIVE;
+			antecedent & !consequent & deadline: FULFILLED;
+			antecedent & consequent & !deadline: VIOLATED;
+		esac;
+
+MODULE authorization(role1, role2, antecedent, consequent, deadline)
+
+CONSTANTS CONDITIONAL, ACTIVE, FULFILLED, VIOLATED;
+
+DEFINE
+	subject:= role1;
+	object:= role2;
+
+	status:= 
+		case
+			!antecedent: CONDITIONAL;
+			antecedent & !consequent & !deadline: ACTIVE;
+			!antecedent & consequent: VIOLATED;
+			TRUE: FULFILLED;
+		esac;
+
+MODULE commitment(role1, role2, antecedent, consequent, deadline)
+
+CONSTANTS CONDITIONAL, ACTIVE, FULFILLED, VIOLATED;
+
+DEFINE
+	subject:= role1;
+	object:= role2;
+
+	status:= 
+		case
+			!antecedent: CONDITIONAL;
+			antecedent & !consequent & !deadline: ACTIVE;
+			antecedent & consequent & !deadline: FULFILLED;
+			antecedent & !consequent & deadline: VIOLATED;
+		esac;

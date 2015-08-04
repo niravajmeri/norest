@@ -1,0 +1,13 @@
+MODULE main
+
+VAR
+	consent: boolean;
+
+ASSIGN
+	init(consent):= FALSE;
+
+	next(consent):=
+		case
+			consent: TRUE;
+			TRUE: {TRUE, FALSE};
+		esac;

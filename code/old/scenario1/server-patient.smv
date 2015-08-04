@@ -1,0 +1,24 @@
+MODULE main
+
+VAR
+	consent: boolean;
+	records: boolean;
+
+ASSIGN
+	init(consent):= FALSE;
+	init(records):= FALSE;
+
+	next(consent):=
+		case
+			consent: TRUE;
+			TRUE: {TRUE, FALSE};
+		esac;
+
+	next(records):=
+		case
+			consent: TRUE;
+			TRUE: FALSE;
+		esac;
+
+SPEC	
+	EF (!consent & records);

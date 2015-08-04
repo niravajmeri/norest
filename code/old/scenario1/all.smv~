@@ -1,0 +1,121 @@
+MODULE prohibition(role1, role2, antecedent, consequent, deadline)
+
+CONSTANTS CONDITIONAL, ACTIVE, FULFILLED, VIOLATED;
+
+DEFINE
+	subject:= role1;
+	object:= role2;
+
+	status:= 
+		case
+			!antecedent: CONDITIONAL;
+			antecedent & !consequent & !deadline: ACTIVE;
+			antecedent & !consequent & deadline: FULFILLED;
+			antecedent & consequent & !deadline: VIOLATED;
+		esac;
+
+MODULE authorization(role1, role2, antecedent, consequent, deadline)
+
+CONSTANTS CONDITIONAL, ACTIVE, FULFILLED, VIOLATED;
+
+DEFINE
+	subject:= role1;
+	object:= role2;
+
+	status:= 
+		case
+			!antecedent: CONDITIONAL;
+			antecedent & !consequent & !deadline: ACTIVE;
+			!antecedent & consequent: VIOLATED;
+			TRUE: FULFILLED;
+		esac;
+
+MODULE commitment(role1, role2, antecedent, consequent, deadline)
+
+CONSTANTS CONDITIONAL, ACTIVE, FULFILLED, VIOLATED;
+
+DEFINE
+	subject:= role1;
+	object:= role2;
+
+	status:= 
+		case
+			!antecedent: CONDITIONAL;
+			antecedent & !consequent & !deadline: ACTIVE;
+			antecedent & consequent & !deadline: FULFILLED;
+			antecedent & !consequent & deadline: VIOLATED;
+		esac;
+
+MODULE main
+
+VAR
+	consent: boolean;
+	patient_consent: boolean;
+	emergency_consent: boolean;
+	records: boolean;
+	consent_promise: boolean;
+
+	emergency: boolean;
+	emergency_end: boolean;
+
+	r1: {patient, doctor, hospital};
+	r2: {patient, doctor, hospital};
+
+	a1: authorization(r1, r2, emergency_consent, records, emergency_end);
+	c1: commitment(r1, r2, consent_promise, consent, FALSE);
+
+ASSIGN
+	init(consent):= FALSE;
+	init(records):= FALSE;
+	init(consent_promise):= FALSE;
+	init(r1):= doctor;
+	init(r2):= hospital;
+	init(emergency):= FALSE;
+	init(emergency_end):= FALSE;
+	init(patient_consent):= FALSE;
+	init(emergency_consent):= FALSE;
+
+	next(consent_promise):= {TRUE, FALSE};
+	next(r1):= doctor;
+	next(r2):= hospital;
+	next(emergency_end):= {TRUE, FALSE};
+
+	next(emergency):= 
+		case
+			emergency_end: FALSE;
+			TRUE: {TRUE, FALSE};
+		esac;
+
+	next(patient_consent):= 
+		case
+			emergency: FALSE;
+			patient_consent: TRUE;
+			TRUE: {TRUE, FALSE};
+		esac;
+
+	next(consent):=
+		case
+			consent: TRUE;
+			patient_consent: TRUE;
+			a1.status = ACTIVE: TRUE;
+			TRUE: FALSE;
+		esac;
+
+	next(records):=
+		case
+			consent: TRUE;
+--			a1.status = ACTIVE: TRUE;
+			TRUE: FALSE;
+		esac;
+
+	next(emergency_consent):=
+		case
+			emergency & c1.status = ACTIVE: TRUE;
+			TRUE: FALSE;
+		esac;
+
+SPEC	
+	EF (!consent & records);
+
+SPEC	
+	AG (emergency -> EF (!patient_consent & records));
