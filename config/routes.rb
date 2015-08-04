@@ -8,6 +8,7 @@ Norest::Application.routes.draw do
   get "pattern2" => "home#pattern2", :as => "pattern2"
   get "pattern3" => "home#pattern3", :as => "pattern3"
   get "custom" => "home#custom", :as => "custom"
+  post "execute_nusmv" => "home#execute_nusmv", :as => "execute_nusmv"
   
   # You can have the root of your site routed with "root"
   root 'home#index'
