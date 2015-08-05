@@ -59,8 +59,6 @@ VAR
  
 
 
-p1: p(r1, r2, !consent & !emergency, records, FALSE);
-	a1: a(r1, r2, emergency, records, FALSE);
 ASSIGN
 	init(emergency):= FALSE;
 	init(consent):= FALSE;

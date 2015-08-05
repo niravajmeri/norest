@@ -53,6 +53,19 @@ class HomeController < ApplicationController
   end
 
   def custom_norms
+    filepath = "./code/models/tmp_model.smv"
+    @tmp_model_top = `cat ./code/models/tmp_model_top.smv `
+    @tmp_model_bot = `cat ./code/models/tmp_model_bot.smv `
+    File.open(filepath, "w+") do |f|
+      f.write(@tmp_model_top)
+      f.write("\n")
+      #f.write(@tmp_norms)
+      #f.write("\n")
+      f.write(@tmp_model_bot)
+    end
+    
+    @model = `cat ./code/models/tmp_model.smv `
+    @output = `NuSMV ./code/models/tmp_model.smv `
   end
   
   def execute_custom_norms
