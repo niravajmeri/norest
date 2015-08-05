@@ -1,13 +1,18 @@
-== INSTALLATION INSTRUCTIONS
+== Getting Started
 
-1. Update database privileges in config/database.yml
+1. Update database privileges in <tt>./config/database.yml</tt>
 
-2. <tt>rake db:create</tt> to create database
+2. At the command prompt, change directory to <tt>norest</tt> and create the database:
+   <tt>rake db:create</tt> to create database
 
-3. <tt>rake db:migrate</tt> to create tables
+3. Run migration script
+   <tt>rake db:migrate</tt>
 
-4. <tt>bundle install</tt> to install required gems
+4. Install the required gems:
+   <tt>bundle install</tt>
 
-5. <tt>rails s </tt> to start the server
+5. Start the server:
+   <tt>rails s </tt>
 
-6. Open <tt>http://localhost:3000</tt> in the browser
+6. Open the application in the browser:
+   <tt>http://localhost:3000</tt>
