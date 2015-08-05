@@ -11,9 +11,9 @@
 development:
   adapter: mysql
   database: norest_development
-  username: nirav
-  password: nirav-mas!123
-  host: taipei.csc.ncsu.edu
+  username: root
+  password: qwerty
+  host: localhost
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -21,9 +21,9 @@ development:
 test:
   adapter: mysql
   database: norest_test
-  username: nirav
-  password: nirav-mas!123
-  host: taipei.csc.ncsu.edu
+  username: root
+  password: qwerty
+  host: localhost
 
 production:
   adapter: mysql

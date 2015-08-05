@@ -1,0 +1,60 @@
+MODULE p(role1, role2, antecedent, consequent, deadline)
+ 
+CONSTANTS CONDITIONAL, ACTIVE, FULFILLED, VIOLATED;
+ 
+DEFINE
+	subject:= role1;
+	object:= role2;
+ 
+	status:= 
+		case
+			!antecedent: CONDITIONAL;
+			antecedent & !consequent & !deadline: ACTIVE;
+			antecedent & !consequent & deadline: FULFILLED;
+			antecedent & consequent & !deadline: VIOLATED;
+		esac;
+ 
+MODULE a(role1, role2, antecedent, consequent, deadline)
+ 
+CONSTANTS CONDITIONAL, ACTIVE, FULFILLED, VIOLATED;
+ 
+DEFINE
+	subject:= role1;
+	object:= role2;
+ 
+	status:= 
+		case
+			!antecedent: CONDITIONAL;
+			antecedent & !consequent & !deadline: ACTIVE;
+			!antecedent & consequent: VIOLATED;
+			TRUE: FULFILLED;
+		esac;
+ 
+MODULE c(role1, role2, antecedent, consequent, deadline)
+ 
+CONSTANTS CONDITIONAL, ACTIVE, FULFILLED, VIOLATED;
+ 
+DEFINE
+	subject:= role1;
+	object:= role2;
+ 
+	status:= 
+		case
+			!antecedent: CONDITIONAL;
+			antecedent & !consequent & !deadline: ACTIVE;
+			antecedent & consequent & !deadline: FULFILLED;
+			antecedent & !consequent & deadline: VIOLATED;
+		esac;
+ 
+MODULE main
+ 
+VAR
+	emergency: boolean;
+	consent: boolean;
+	records: boolean;
+	disclosed: boolean;
+ 
+	r1: {physician, hospital};
+	r2: {physician, hospital};
+ 
+

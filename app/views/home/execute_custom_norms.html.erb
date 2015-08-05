@@ -2,26 +2,26 @@
 
 <div class="col-lg-12">
   <div class="col-lg-6">
-    <div class="row">
+    <!--<div class="row">-->
       <h2>Norms</h2>
       <%= form_tag({controller: :home, action: :execute_custom_norms}, {class: 'form-horizontal'}) do %>
       <div class="form-group">
         <div class="col-sm-10">
-          <%= text_area_tag :norms, @norms, class: 'form-control',  style: "height: 200px; overflow: scroll;" %>
+          <%= text_area_tag :norms, @tmp_norms, class: 'form-control',  style: "height: 150px; overflow: scroll;" %>
         </div>
         <%= submit_tag 'Execute', class: 'col-sm-2 btn  btn-info btn-sm' %>
       </div>
       <%end%>
-    </div>
-    <div class="row">
+    <!--</div>-->
+    <!--<div class="row">-->
       <h2>Model</h2>
-      <pre class="prettyprint linenums" style="height: 800px; overflow: scroll;"><%=@model%></pre>
+      <pre class="prettyprint linenums" style="height: 485px; overflow: scroll;"><%=@model%></pre>
       
-    </div>
+    <!--</div>-->
   </div>
   <div class="col-lg-6">
     <h2>NuSMV Output </h2>
-    <pre class="prettyprint linenums" style="height: 1000px; overflow: scroll;"><%=@output%></pre>
+    <pre class="prettyprint linenums" style="height: 700px; overflow: scroll;"><%=@output%></pre>
   </div>
 
 </div>
