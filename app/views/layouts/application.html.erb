@@ -28,9 +28,9 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
+            <li><a href="#">Home</a></li>
+            <!--<li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>-->
             <li><a href="#">Help</a></li>
           </ul>
           <form class="navbar-form navbar-right">
@@ -44,7 +44,7 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li <% if params[:action] == "index"%> class="active" <%end%>><a href="/home">Dashboard</a></li>
+            <li <% if params[:action] == "index"%> class="active" <%end%>><a href="/home">Home</a></li>
             <li <% if params[:action] == "original"%> class="active" <%end%>><a href="/original">Original Model</a></li>
             <li <% if params[:action] == "pattern1"%> class="active" <%end%>><a href="/pattern1">Pattern 1</a></li>
             <li <% if params[:action] == "pattern2"%> class="active" <%end%>><a href="/pattern2">Pattern 2</a></li>
