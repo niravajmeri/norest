@@ -1,3 +1,4 @@
+
 ASSIGN
 	init(emergency):= FALSE;
 	init(consent):= FALSE;

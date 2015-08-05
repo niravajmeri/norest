@@ -57,7 +57,9 @@ VAR
 	r1: {physician, hospital};
 	r2: {physician, hospital};
  
-
+	p1: p(r1, r2, !consent & !emergency, records, FALSE);
+	a1: a(r1, r2, emergency, records, FALSE);
+	p2: p(r1, r2, !consent, disclosed, FALSE);
 
 ASSIGN
 	init(emergency):= FALSE;
