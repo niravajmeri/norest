@@ -1,0 +1,45 @@
+<!--<h1>Norm Refinement</h1>-->
+
+<div class="col-lg-12">
+  <div class="col-lg-6">
+    <!--<div class="row">-->
+      <!--<h2>Customizations</h2>-->
+      <%= form_tag({controller: :home, action: :execute_custom_norms}, {class: 'form-horizontal'}) do %>
+      
+      <div class="form-group">
+        <label for="norms">Norms</label>
+        <%= text_area_tag :norms, @tmp_norms, class: 'form-control',  style: "height: 100px; overflow: scroll;" %>
+      </div>
+      <div class="form-group">
+        <label for="properties">Properties to Verify</label>
+        <%= text_area_tag :properties, @tmp_properties, class: 'form-control',  style: "height: 100px; overflow: scroll;" %>
+      </div>
+      <%= submit_tag 'Generate Model', class: 'btn-info btn-sm' %>
+      <%end%>
+    <!--</div>-->
+    <!--<div class="row">-->
+      <!--<h2>Generated Model</h2>-->
+      <hr/>
+      <%= form_tag({controller: :home, action: :execute_custom_norms}, {class: 'form-horizontal'}) do %>
+      <div class="form-group">
+          <label for="model">Generated Model</label>
+          <!--<pre class="prettyprint linenums" style="height: 300px; overflow: scroll;"><%=@model%></pre>-->
+          <%= text_area_tag :model, @model, class: 'form-control',  style: "height: 270px; overflow: scroll;" %>
+      </div>
+      <%= submit_tag 'Execute Model', class: 'btn-info btn-sm' %>
+      <%end%>
+    <!--</div>-->
+  </div>
+  <div class="col-lg-6">
+
+    <div class="form-group">
+      <label for="property_status">Property Status</label>
+
+    </div>
+    <div class="form-group">
+      <label for="output">NuSMV Output </label>
+      <pre class="prettyprint linenums" style="height: 500px; overflow: scroll;"><%=@output%></pre>
+    </div>
+  </div>
+
+</div>

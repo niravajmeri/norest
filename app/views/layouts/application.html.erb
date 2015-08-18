@@ -42,6 +42,8 @@
   
   <div class="container-fluid">
     <div class="row">
+
+      <%if params[:action] != "norm_refinement" %>
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li <% if params[:action] == "index"%> class="active" <%end%>><a href="/home">Home</a></li>
@@ -57,6 +59,11 @@
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <%= yield %>
       </div>
+      <%else%>
+        <div class="col-sm-12 main">
+          <%= yield %>
+        </div>
+      <%end%>
     </div>
   </div>
 
