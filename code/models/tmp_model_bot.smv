@@ -27,17 +27,6 @@ ASSIGN
 			TRUE: {TRUE, FALSE};
 		esac;
  
------------
--- norms --
------------
- 
-	next(records):=
-		case
-			!consent & !emergency: FALSE; -- from p1 --
-			!emergency: FALSE; -- from a1 --		
-			emergency: {TRUE, FALSE}; -- from a1 --
-			TRUE: {TRUE, FALSE};
-		esac;
  
 ----------------
 -- properties --

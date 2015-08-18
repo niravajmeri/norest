@@ -1,0 +1,61 @@
+<!--<h1>Norm Refinement</h1>-->
+
+<div class="col-lg-12">
+  <div class="col-lg-6">
+    <!--<div class="row">-->
+      <h2>Generation</h2>
+      <%= form_tag({controller: :home, action: :execute_norm_refinement}, {class: ''}) do %>
+      
+      <div class="form-group">
+        <label for="norms">Norms</label>
+        <%= text_area_tag :norms, @tmp_norms.join("\n"), class: 'form-control',  style: "height: 100px; overflow: scroll;" %>
+      </div>
+      
+      <%= submit_tag 'Generate Model', class: 'btn btn-info btn-sm' %>
+      <%end%>
+
+      <%# @norms.each do|norm|%>
+      <!--<pre><%#=norm%></pre>-->
+      <%# end %>
+    
+    <!--</div>-->
+    <!--<div class="row">-->
+      <!--<h2>Generated Model</h2>-->
+      <hr/>
+      
+      <div class="form-group">
+          <label for="model">Generated Model</label>
+          <pre class="prettyprint linenums" style="height: 300px; overflow: scroll;"><%=@model%></pre>
+          <%#= text_area_tag :model, @model, class: 'form-control',  style: "height: 270px; overflow: scroll;" %>
+      </div>
+      
+    <!--</div>-->
+  </div>
+  <div class="col-lg-6">
+    <h2>Verification</h2>
+
+    <%= form_tag({controller: :home, action: :execute_norm_refinement}, {class: ''}) do %>
+      <div class="form-group">
+        <label for="requirements">Requirements</label>
+        <%= text_area_tag :requirements, @tmp_requirements, class: 'form-control',  style: "height: 100px; overflow: scroll;" %>
+      </div>
+      <%= submit_tag 'Verify Requirements', class: 'btn btn-info btn-sm' %>
+    <%end%>
+
+    <div class="form-group">
+      <label for="requirement_status">Requirement Status</label>
+      <% @requirements.each_with_index do|requirement, index| %>
+        <li><%=requirement%></li>
+      <% end %>
+
+    </div>
+    <div class="form-group">
+      <label for="output">NuSMV Output </label>
+      <pre class="prettyprint linenums" style="height: 200px; overflow: scroll;"><%=@output%></pre>
+    </div>
+
+    <h2>Refinement</h2>
+
+  </div>
+
+</div>
