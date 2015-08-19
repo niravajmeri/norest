@@ -45,7 +45,7 @@
     <div class="form-group">
       <label for="requirement_status">Requirement Status</label>
       <% @requirements.each_with_index do|requirement, index| %>
-        <li><%=requirement%></li>
+        <li><%=requirement%>: <%=@requirements_status[index]%></li>
       <% end %>
 
     </div>

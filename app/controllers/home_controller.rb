@@ -155,10 +155,12 @@ class HomeController < ApplicationController
    end
 
     @requirements = params[:requirements].split("--").map(&:strip)
+    @requirements_status = Array.new
 
-
-
-    @requirements.each do |tmp_requirement|
+    @requirements.each_with_index do |tmp_requirement, index|
+      if tmp_requirement != nil
+        @requirements_status[index] = tmp_requirement.split("\n").map(&:strip)[0].split("=").map(&:strip)[1]
+      end
     end
 
     filepath = "./code/models/tmp_model.smv"
@@ -176,14 +178,17 @@ class HomeController < ApplicationController
         next if (index == @norm_hash["disclosed"] or index == @norm_hash["consent"])
           #continue
         #end
-      f.write(norm)
+        f.write(norm)
       end
+
+      f.write("\n")
+      f.write("\n----------------\n-- properties --\n----------------\n")
+      f.write(params[:requirements])
 
     end
     
     @model = `cat ./code/models/tmp_model.smv `
     @output = `NuSMV ./code/models/tmp_model.smv `
-
 
   end
 
