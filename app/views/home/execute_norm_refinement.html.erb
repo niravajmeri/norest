@@ -34,19 +34,23 @@
   <div class="col-lg-6">
     <h2>Verification</h2>
 
-    <%= form_tag({controller: :home, action: :execute_norm_refinement}, {class: ''}) do %>
+    <%= form_tag({controller: :home, action: :verify_requirements}, {class: ''}) do %>
       <div class="form-group">
         <label for="requirements">Requirements</label>
-        <%= text_area_tag :requirements, @tmp_requirements, class: 'form-control',  style: "height: 100px; overflow: scroll;" %>
+        <%= hidden_field_tag :norms, @tmp_norms%>
+        <%= text_area_tag :requirements, @requirements, class: 'form-control',  style: "height: 100px; overflow: scroll;" %>
       </div>
       <%= submit_tag 'Verify Requirements', class: 'btn btn-info btn-sm' %>
     <%end%>
 
     <div class="form-group">
       <label for="requirement_status">Requirement Status</label>
-      <% @requirements.each_with_index do|requirement, index| %>
-        <li><%=requirement%>: <%=@requirements_status[index]%></li>
+      <ul>
+      <% @tmp_requirements.each_with_index do|requirement, index| %>
+        <li><%=@requirements_spec[index].strip%>: <%=@requirements_status[index]%></li>
       <% end %>
+      </ul>
+        <%#=@requirements%>
 
     </div>
     <div class="form-group">

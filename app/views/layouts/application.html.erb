@@ -43,7 +43,7 @@
   <div class="container-fluid">
     <div class="row">
 
-      <%if params[:action] != "norm_refinement" and params[:action] != "execute_norm_refinement" %>
+      <%if params[:action] != "norm_refinement" and params[:action] != "execute_norm_refinement" and params[:action] != "verify_requirements"%>
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li <% if params[:action] == "index"%> class="active" <%end%>><a href="/home">Home</a></li>

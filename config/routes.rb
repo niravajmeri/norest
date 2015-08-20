@@ -8,6 +8,9 @@ Norest::Application.routes.draw do
   get "pattern2" => "home#pattern2", :as => "pattern2"
   get "pattern3" => "home#pattern3", :as => "pattern3"
 
+
+  post "verify_requirements" => "home#verify_requirements", :as => "verify_requirements"
+
   get "norm_refinement" => "home#norm_refinement", :as => "norm_refinement"
   post "execute_norm_refinement" => "home#execute_norm_refinement", :as => "execute_norm_refinement"
 

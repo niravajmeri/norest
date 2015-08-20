@@ -28,22 +28,3 @@ ASSIGN
 		esac;
  
  
-----------------
--- properties --
-----------------
- 
--- prop1 = false
-SPEC	
-	EF (!consent & records);
- 
--- prop2 = false
-SPEC	
-	EF (!consent & disclosed);
- 
--- prop3 = true
-SPEC	
-	EF ((emergency & !consent) & records);
- 
--- prop4 = true
-SPEC	
-	AG (records -> AF consent);

@@ -150,18 +150,11 @@ class HomeController < ApplicationController
     #  @norms = @norms + "\n TRUE: {TRUE, FALSE};"
     #end
 
-   @norms.each_with_index do|norm, index|
-    @norms[index] = norm + "\nesac;\n"
-   end
-
-    @requirements = params[:requirements].split("--").map(&:strip)
-    @requirements_status = Array.new
-
-    @requirements.each_with_index do |tmp_requirement, index|
-      if tmp_requirement != nil
-        @requirements_status[index] = tmp_requirement.split("\n").map(&:strip)[0].split("=").map(&:strip)[1]
-      end
+    @norms.each_with_index do|norm, index|
+      @norms[index] = norm + "\nesac;\n"
     end
+
+    
 
     filepath = "./code/models/tmp_model.smv"
     @tmp_model_top = `cat ./code/models/tmp_model_top.smv `
@@ -181,15 +174,56 @@ class HomeController < ApplicationController
         f.write(norm)
       end
 
-      f.write("\n")
-      f.write("\n----------------\n-- properties --\n----------------\n")
-      f.write(params[:requirements])
+      #f.write("\n")
+      #f.write("\n----------------\n-- properties --\n----------------\n")
+      #f.write(params[:requirements])
 
     end
     
     @model = `cat ./code/models/tmp_model.smv `
+    #@output = `NuSMV ./code/models/tmp_model.smv `
+
+    @requirements = Array.new
+    @tmp_requirements = Array.new
+
+  end
+
+  def generate_model
+  end
+
+  def verify_requirements
+
+    @tmp_norms = Array.new
+    @requirements = String.new
+    @tmp_requirements = Array.new
+
+    @tmp_norms = params[:norms].split("\n").map(&:strip)
+    @requirements = params[:requirements].strip
+    @tmp_requirements = @requirements.split("--").map(&:strip).reject!(&:empty?)
+    @requirements_status = Array.new
+    @requirements_spec = Array.new
+
+    @tmp_requirements.each_with_index do |tmp_requirement, index|
+      if tmp_requirement != nil and tmp_requirement != "" and tmp_requirement.split("\n")[0] != nil #and tmp_requirement.split("\n")[0].split["="] != nil
+        @requirements_spec[index] = tmp_requirement.split("\n").map(&:strip)[2]
+        @requirements_status[index] = tmp_requirement.split("\n").map(&:strip)[0].split("=").map(&:strip)[1]
+      end
+    end
+
+
+    filepath = "./code/models/tmp_model.smv"
+    @model = `cat ./code/models/tmp_model.smv `
+    @tmp_model_top = `cat ./code/models/tmp_model_top.smv `
+    @tmp_model_bot = `cat ./code/models/tmp_model_bot.smv `
+    File.open(filepath, "w+") do |f|
+      f.write(@model)
+      f.write("\n----------------\n-- properties --\n----------------\n")
+      f.write(params[:requirements])
+    end
+
     @output = `NuSMV ./code/models/tmp_model.smv `
 
+    render :execute_norm_refinement
   end
 
 end
