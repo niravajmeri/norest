@@ -45,11 +45,18 @@
 
     <div class="form-group">
       <label for="requirement_status">Requirement Status</label>
-      <ul>
+      <ol>
       <% @tmp_requirements.each_with_index do|requirement, index| %>
-        <li><%=@requirements_spec[index].strip%>: <%=@requirements_status[index]%></li>
+        <li>  
+          <% if @requirements_status[index] == @requirements_nusmv_status[index]%>
+            <i class="glyphicon glyphicon-ok-sign"></i>
+          <% else%> 
+            <i class="glyphicon glyphicon-remove-sign"></i>
+          <% end %>
+          <%=@requirements_spec[index].strip%>: <%=@requirements_status[index]%>. NuSMV Output: <%=@requirements_nusmv_status[index]%>
+        </li>
       <% end %>
-      </ul>
+      </ol>
         <%#=@requirements%>
 
     </div>

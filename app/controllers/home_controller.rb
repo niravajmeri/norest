@@ -205,7 +205,7 @@ class HomeController < ApplicationController
 
     @tmp_requirements.each_with_index do |tmp_requirement, index|
       if tmp_requirement != nil and tmp_requirement != "" and tmp_requirement.split("\n")[0] != nil #and tmp_requirement.split("\n")[0].split["="] != nil
-        @requirements_spec[index] = tmp_requirement.split("\n").map(&:strip)[2]
+        @requirements_spec[index] = tmp_requirement.split("\n").map(&:strip)[2].chomp(";")
         @requirements_status[index] = tmp_requirement.split("\n").map(&:strip)[0].split("=").map(&:strip)[1]
       end
     end
@@ -222,6 +222,16 @@ class HomeController < ApplicationController
     end
 
     @output = `NuSMV ./code/models/tmp_model.smv `
+
+    counter = 0
+    @requirements_nusmv_status = Array.new
+
+    @output.split("\n").map(&:strip).each do |linewise_output|
+      if linewise_output != nil and @requirements_spec[counter] != nil and linewise_output.include? @requirements_spec[counter]
+        @requirements_nusmv_status[counter] = linewise_output.split(")  is ").map(&:strip)[1]
+        counter = counter + 1
+      end
+    end
 
     render :execute_norm_refinement
   end
