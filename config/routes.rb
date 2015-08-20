@@ -21,7 +21,7 @@ Norest::Application.routes.draw do
   post "execute_nusmv" => "home#execute_nusmv", :as => "execute_nusmv"
   
   # You can have the root of your site routed with "root"
-  root 'home#index'
+  root 'home#norm_refinement'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
