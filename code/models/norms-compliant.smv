@@ -1,0 +1,159 @@
+MODULE c(role1, role2, antecedent, consequent, deadline)
+
+CONSTANTS CONDITIONAL, ACTIVE, SATISFIED, VIOLATED;
+
+DEFINE
+	subject:= role1;
+	object:= role2;
+
+	status:= 
+		case
+			!antecedent: CONDITIONAL;
+			antecedent & !consequent & !deadline: ACTIVE;
+			antecedent & consequent & !deadline: SATISFIED;
+			antecedent & !consequent & deadline: VIOLATED;
+		esac;
+
+MODULE a(role1, role2, antecedent, consequent, deadline)
+
+CONSTANTS CONDITIONAL, ACTIVE, SATISFIED, VIOLATED;
+
+DEFINE
+	subject:= role1;
+	object:= role2;
+
+	status:= 
+		case
+			!antecedent: CONDITIONAL;
+			antecedent & !consequent & !deadline: ACTIVE;
+			!antecedent & consequent: VIOLATED;
+			TRUE: SATISFIED;
+		esac;
+
+MODULE p(role1, role2, antecedent, consequent, deadline)
+
+CONSTANTS CONDITIONAL, ACTIVE, SATISFIED, VIOLATED;
+
+DEFINE
+	subject:= role1;
+	object:= role2;
+
+	status:= 
+		case
+			!antecedent: CONDITIONAL;
+			antecedent & !consequent & !deadline: ACTIVE;
+			antecedent & !consequent & deadline: SATISFIED;
+			antecedent & consequent & !deadline: VIOLATED;
+		esac;
+
+MODULE main
+
+VAR
+	emergency: boolean;
+	disaster: boolean;
+	consent: boolean;
+	swipe_card: boolean;
+	access_PC: boolean;
+	logged_in: boolean;
+	EMR: boolean;
+	nonpatient_EMR: boolean;
+	hour: boolean;
+	day: boolean;
+	disclose_PHI_family: boolean;	
+	disclose_PHI_online: boolean;
+
+	r1: {EP, ED};
+	r2: {EP, ED};
+
+	a1: a(r1, r2, swipe_card, access_PC, FALSE);
+	a2: a(r1, r2, !consent & logged_in, EMR, day);
+	p1: p(r1, r2, EMR, disclose_PHI_online, FALSE);
+	p2: p(r1, r2, logged_in, nonpatient_EMR, FALSE);
+	c1: c(r1, r2, EMR, !logged_in, day);
+
+ASSIGN
+	init(emergency):= FALSE;
+	init(disaster):= FALSE;
+	init(consent):= FALSE;
+	init(swipe_card):= FALSE;
+	init(access_PC):= FALSE;
+	init(logged_in):= FALSE;
+	init(EMR):= FALSE;
+	init(nonpatient_EMR):= FALSE;
+	init(hour):= FALSE;
+	init(day):= FALSE;
+	init(disclose_PHI_family):= FALSE;
+	init(disclose_PHI_online):= FALSE;
+	init(r1):= EP;
+	init(r2):= ED;
+
+	next(hour):= FALSE;
+	next(day):= FALSE;
+	next(r1):= EP;
+	next(r2):= ED;
+
+	next(consent):=
+		case
+			consent: TRUE; -- monotonicity rule --
+			TRUE: {TRUE, FALSE};
+		esac;
+
+	next(logged_in):=
+		case
+			EMR & !day: FALSE; -- from c1 --
+			access_PC: {TRUE, FALSE}; -- precondition rule --
+			TRUE: FALSE;
+		esac;
+
+	next(disclose_PHI_family):=
+		case
+			EMR: {TRUE, FALSE}; -- precondition rule --
+			TRUE: FALSE;
+		esac;
+
+	next(disclose_PHI_online):=
+		case
+			EMR: FALSE; -- from p1 --
+-- norm override	EMR: {TRUE, FALSE}; -- precondition rule --
+			TRUE: FALSE;
+		esac;
+
+	next(access_PC):=
+		case
+			!swipe_card: FALSE; -- from a1 --		
+			swipe_card: {TRUE, FALSE}; -- from a1 --
+			TRUE: {TRUE, FALSE};
+		esac;
+
+	next(EMR):=
+		case
+			consent & !logged_in: FALSE; -- from a2 --		
+			!consent & logged_in: {TRUE, FALSE}; -- from a2 --
+			TRUE: {TRUE, FALSE};
+		esac;
+
+	next(nonpatient_EMR):=
+		case
+			logged_in: FALSE; -- from p2 --		
+			TRUE: {TRUE, FALSE};
+		esac;
+
+------------------
+-- requirements --
+------------------
+
+-- R1 should be false
+SPEC
+	EF (disclose_PHI_online);
+
+-- R2 should be true
+SPEC
+	EF ((emergency & !consent) & EMR);
+
+-- R3 should be true
+SPEC
+	AG (EMR -> AF !logged_in);
+
+-- R4 should be true
+SPEC
+	AG (disaster -> EF disclose_PHI_family);
