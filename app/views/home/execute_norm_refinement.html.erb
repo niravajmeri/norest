@@ -9,7 +9,7 @@
       
       <div class="form-group">
         <label for="norms">Norms</label>
-        <%= text_area_tag :norms, @tmp_norms.join("\n"), class: 'form-control',  style: "height: 100px; overflow: scroll;" %>
+        <%= text_area_tag :norms, @tmp_norms.join("\n"), class: 'form-control',  style: "height: 100px; overflow-y: scroll;" %>
       </div>
       
       <%= submit_tag 'Generate Model', class: 'btn btn-info btn-sm' %>
@@ -26,7 +26,7 @@
       
       <div class="form-group">
           <label for="model">Generated Model</label>
-          <pre class="prettyprint linenums" style="height: 150px; overflow: scroll;"><%=@model%></pre>
+          <pre class="prettyprint linenums" style="height: 150px; overflow-y: scroll;"><%=@model%></pre>
           <%#= text_area_tag :model, @model, class: 'form-control',  style: "height: 270px; overflow: scroll;" %>
       </div>
       
@@ -46,7 +46,7 @@
         <div class="form-group">
           <label for="requirements">Requirements</label>
           <%= hidden_field_tag :norms, @tmp_norms.join("\n")%>
-          <%= text_area_tag :requirements, @requirements.size > 0 ? @requirements : "", class: 'form-control code',  style: "height: 100px; overflow: scroll;" %>
+          <%= text_area_tag :requirements, @requirements.size > 0 ? @requirements : "", class: 'form-control code',  style: "height: 120px; overflow-y: scroll;" %>
         </div>
         <%= submit_tag 'Verify Requirements', class: 'btn btn-info btn-sm' %>
         <%end%>
@@ -55,7 +55,7 @@
       <div class="col-sm-6">
         <div class="form-group">
         <label for="requirement_status">Requirement Status</label>
-        <div style="height: 100px; overflow: scroll;">
+        <div style="height: 120px; overflow-y: scroll;">
         <!--<ol>-->
         <% @tmp_requirements.each_with_index do|requirement, index| %>
         <!--<li>  -->
@@ -68,7 +68,7 @@
           <% end %>
           <code><%=@requirements_spec[index].strip%>: <%=@requirements_status[index]%>.</code> <!-- NuSMV: <%=@requirements_nusmv_status[index]%> -->
           <%if !verified%>
-            <button type="button" class="btn btn-info btn-xs">Refine</button>
+            <button type="button" class="btn btn-success btn-xs">Revise</button>
           <%end%>
           <br/>
         <!--</li>-->
