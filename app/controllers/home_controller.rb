@@ -137,7 +137,7 @@ class HomeController < ApplicationController
       if @norm_type[index] == "c"
         norm = "\t\t#{@antecendent[index]} & !#{@deadline[index]}: TRUE; -- from #{@norm_name[index]} --" + "\n\t\tTRUE: {TRUE, FALSE}; -- from #{@norm_name[index]} --"
       elsif @norm_type[index] == "a"
-        norm = "\t\t!#{@antecendent[index]}: FALSE; -- from #{@norm_name[index]} --" + "\n\t\t#{@antecendent[index]}: {TRUE, FALSE}; -- from #{@norm_name[index]} --"
+        norm = "\t\t!#{@antecendent[index]}: FALSE; -- from #{@norm_name[index]} --" + "\n\t\t#{@antecendent[index]}: {TRUE, FALSE}; -- from #{@norm_name[index]} --" + "\n\t\tTRUE: {TRUE, FALSE}; -- from #{@norm_name[index]} --"
         antecendent_check = true
       elsif @norm_type[index] == "p"
         norm = "\t\t#{@antecendent[index]} & !#{@deadline[index]}: FALSE; -- from #{@norm_name[index]} --" + "\n\t\tTRUE: {TRUE, FALSE}; -- from #{@norm_name[index]} --"
