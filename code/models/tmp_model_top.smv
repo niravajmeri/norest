@@ -1,59 +1,66 @@
-MODULE p(role1, role2, antecedent, consequent, deadline)
- 
-CONSTANTS CONDITIONAL, ACTIVE, FULFILLED, VIOLATED;
- 
+MODULE c(role1, role2, antecedent, consequent, deadline)
+
+CONSTANTS CONDITIONAL, ACTIVE, SATISFIED, VIOLATED;
+
 DEFINE
 	subject:= role1;
 	object:= role2;
- 
+
 	status:= 
 		case
 			!antecedent: CONDITIONAL;
 			antecedent & !consequent & !deadline: ACTIVE;
-			antecedent & !consequent & deadline: FULFILLED;
-			antecedent & consequent & !deadline: VIOLATED;
+			antecedent & consequent & !deadline: SATISFIED;
+			antecedent & !consequent & deadline: VIOLATED;
 		esac;
- 
+
 MODULE a(role1, role2, antecedent, consequent, deadline)
- 
-CONSTANTS CONDITIONAL, ACTIVE, FULFILLED, VIOLATED;
- 
+
+CONSTANTS CONDITIONAL, ACTIVE, SATISFIED, VIOLATED;
+
 DEFINE
 	subject:= role1;
 	object:= role2;
- 
+
 	status:= 
 		case
 			!antecedent: CONDITIONAL;
 			antecedent & !consequent & !deadline: ACTIVE;
 			!antecedent & consequent: VIOLATED;
-			TRUE: FULFILLED;
+			TRUE: SATISFIED;
 		esac;
- 
-MODULE c(role1, role2, antecedent, consequent, deadline)
- 
-CONSTANTS CONDITIONAL, ACTIVE, FULFILLED, VIOLATED;
- 
+
+MODULE p(role1, role2, antecedent, consequent, deadline)
+
+CONSTANTS CONDITIONAL, ACTIVE, SATISFIED, VIOLATED;
+
 DEFINE
 	subject:= role1;
 	object:= role2;
- 
+
 	status:= 
 		case
 			!antecedent: CONDITIONAL;
 			antecedent & !consequent & !deadline: ACTIVE;
-			antecedent & consequent & !deadline: FULFILLED;
-			antecedent & !consequent & deadline: VIOLATED;
+			antecedent & !consequent & deadline: SATISFIED;
+			antecedent & consequent & !deadline: VIOLATED;
 		esac;
- 
+
 MODULE main
- 
+
 VAR
 	emergency: boolean;
+	disaster: boolean;
 	consent: boolean;
-	records: boolean;
-	disclosed: boolean;
- 
-	r1: {physician, hospital};
-	r2: {physician, hospital};
- 
+	swipe_card: boolean;
+	access_PC: boolean;
+	logged_in: boolean;
+	EMR: boolean;
+	nonpatient_EMR: boolean;
+	hour: boolean;
+	day: boolean;
+	disclose_PHI_family: boolean;	
+	disclose_PHI_online: boolean;
+
+	r1: {EP, ED};
+	r2: {EP, ED};

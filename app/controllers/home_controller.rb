@@ -129,21 +129,72 @@ class HomeController < ApplicationController
 
     @consequent.uniq.each_with_index do|con, index|
       @norm_hash[con] = index
-      @norms[index]="\nnext(#{con}) :=\n  case"
+      @norms[index]="\nnext(#{con}) :=\n\tcase"
     end
 
     antecendent_check = false
     @tmp_norms.each_with_index do|tmp_norms, index|
       if @norm_type[index] == "c"
-        norm = "  #{@antecendent[index]} & !#{@deadline[index]}: TRUE; -- from #{@norm_name[index]} --" + "\n  TRUE: {TRUE, FALSE}; -- from #{@norm_name[index]} --"
+        norm = "\t\t#{@antecendent[index]} & !#{@deadline[index]}: TRUE; -- from #{@norm_name[index]} --" + "\n\t\tTRUE: {TRUE, FALSE}; -- from #{@norm_name[index]} --"
       elsif @norm_type[index] == "a"
-        norm = "  !#{@antecendent[index]}: FALSE; -- from #{@norm_name[index]} --" + "\n  #{@antecendent[index]}: {TRUE, FALSE}; -- from #{@norm_name[index]} --"
+        norm = "\t\t!#{@antecendent[index]}: FALSE; -- from #{@norm_name[index]} --" + "\n\t\t#{@antecendent[index]}: {TRUE, FALSE}; -- from #{@norm_name[index]} --"
         antecendent_check = true
       elsif @norm_type[index] == "p"
-        norm = "  #{@antecendent[index]} & !#{@deadline[index]}: FALSE; -- from #{@norm_name[index]} --" + "\n  TRUE: {TRUE, FALSE}; -- from #{@norm_name[index]} --"
+        norm = "\t\t#{@antecendent[index]} & !#{@deadline[index]}: FALSE; -- from #{@norm_name[index]} --" + "\n\t\tTRUE: {TRUE, FALSE}; -- from #{@norm_name[index]} --"
       end
           
       @norms[@norm_hash[@consequent[index]]] = @norms[@norm_hash[@consequent[index]]] + "\n" + norm
+    end
+
+=begin
+  next(consent):=
+    case
+      consent: TRUE; -- monotonicity rule --
+      TRUE: {TRUE, FALSE};
+    esac;
+
+  next(logged_in):=
+    case
+      access_PC: {TRUE, FALSE}; -- precondition rule --
+      TRUE: FALSE;
+    esac;
+
+  next(disclose_PHI_family):=
+    case
+      EMR: {TRUE, FALSE}; -- precondition rule --
+      TRUE: FALSE;
+    esac;
+
+  next(disclose_PHI_online):=
+    case
+      EMR: {TRUE, FALSE}; -- precondition rule --
+      TRUE: FALSE;
+    esac;
+=end
+
+
+    if @norm_hash["consent"] != nil
+      @norms[@norm_hash["consent"]] = @norms[@norm_hash["consent"]] + "\n\t\tconsent: TRUE; -- monotonicity rule --\n\t\tTRUE: {TRUE, FALSE};"
+    else
+      @norms.push("\nnext(consent) :=\n\tcase\n\t\tconsent: TRUE; -- monotonicity rule --\n\t\tTRUE: {TRUE, FALSE};")
+    end
+
+    if @norm_hash["logged_in"] != nil
+      @norms[@norm_hash["logged_in"]] = @norms[@norm_hash["logged_in"]]  + "\n\t\taccess_PC: {TRUE, FALSE}; -- precondition rule --\n\t\tTRUE: FALSE;"
+    else
+      @norms.push("\nnext(logged_in) :=\n\tcase\n\t\taccess_PC: {TRUE, FALSE}; -- precondition rule --\n\t\tTRUE: FALSE;")
+    end
+
+    if @norm_hash["disclose_PHI_family"] != nil
+      @norms[@norm_hash["disclose_PHI_family"]] = @norms[@norm_hash["disclose_PHI_family"]]  + "\n\t\tEMR: {TRUE, FALSE}; -- precondition rule --\n\t\tTRUE: FALSE;"
+    else
+      @norms.push("\nnext(disclose_PHI_family) :=\n\tcase\n\t\tEMR: {TRUE, FALSE}; -- precondition rule --\n\t\tTRUE: FALSE;")
+    end
+
+    if @norm_hash["disclose_PHI_online"] != nil
+      @norms[@norm_hash["disclose_PHI_online"]] = @norms[@norm_hash["disclose_PHI_online"]]  + "\n\t\tEMR: {TRUE, FALSE}; -- precondition rule --\n\t\tTRUE: FALSE;"
+    else
+      @norms.push("\nnext(disclose_PHI_online) :=\n\tcase\n\t\tEMR: {TRUE, FALSE}; -- precondition rule --\n\t\tTRUE: FALSE;")
     end
 
     #if !antecendent_check
@@ -151,7 +202,7 @@ class HomeController < ApplicationController
     #end
 
     @norms.each_with_index do|norm, index|
-      @norms[index] = norm + "\nesac;\n"
+      @norms[index] = norm + "\n\tesac;\n"
     end
 
     
@@ -228,7 +279,8 @@ class HomeController < ApplicationController
 
     @output.split("\n").map(&:strip).each do |linewise_output|
       if linewise_output != nil and @requirements_spec[counter] != nil and linewise_output.include? @requirements_spec[counter]
-        @requirements_nusmv_status[counter] = linewise_output.split(")  is ").map(&:strip)[1]
+        #@requirements_nusmv_status[counter] = linewise_output.split(")  is ").map(&:strip)[1]
+        @requirements_nusmv_status[counter] = linewise_output.split(@requirements_spec[counter] + "  is").map(&:strip)[1]
         counter = counter + 1
       end
     end

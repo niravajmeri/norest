@@ -1,7 +1,8 @@
 <!--<h1>Norm Refinement</h1>-->
+<div class="row">
 
 <div class="col-lg-12">
-  <div class="col-lg-6">
+  <div class="col-lg-4">
     <!--<div class="row">-->
       <h2>Generation</h2>
       <%= form_tag({controller: :home, action: :execute_norm_refinement}, {class: ''}) do %>
@@ -25,16 +26,16 @@
       
       <div class="form-group">
           <label for="model">Generated Model</label>
-          <pre class="prettyprint linenums" style="height: 300px; overflow: scroll;"><%=@model%></pre>
+          <pre class="prettyprint linenums" style="height: 250px; overflow: scroll;"><%=@model%></pre>
           <%#= text_area_tag :model, @model, class: 'form-control',  style: "height: 270px; overflow: scroll;" %>
       </div>
       
     <!--</div>-->
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-8">
     <h2>Verification</h2>
     <div class="row">
-    <div class="col-lg-5">
+    <div class="col-lg-6">
       <%= form_tag({controller: :home, action: :verify_requirements}, {class: ''}) do %>
       <div class="form-group">
         <label for="requirements">Requirements</label>
@@ -46,7 +47,7 @@
 
     </div>
 
-    <div class="col-lg-7">
+    <div class="col-lg-6">
       <div class="form-group">
       <label for="requirement_status">Requirement Status</label>
       <div style="height: 100px; overflow: scroll;">
@@ -60,7 +61,7 @@
             <i class="glyphicon glyphicon-remove-sign text-danger"></i>
             <% verified = false %>
           <% end %>
-          <code><%=@requirements_spec[index].strip%>: <%=@requirements_status[index]%>.</code>  <!-- NuSMV: <%=@requirements_nusmv_status[index]%> -->
+          <code><%=@requirements_spec[index].strip%>: <%=@requirements_status[index]%>.</code>  NuSMV: <%=@requirements_nusmv_status[index]%> 
           <%if !verified%>
             <button type="button" class="btn btn-info btn-xs">Refine</button>
           <%end%>
@@ -79,15 +80,20 @@
 
     <h2>Refinement</h2>
 
-    <hr/>
-
-    <div class="form-group">
-      <label for="output">NuSMV Output </label>
-      <pre class="prettyprint linenums code" style="height: 100px; overflow: scroll; background-color: #CCCCCC; "><%= @output != nil ? @output.split("Niklas Sorensson")? @output.split("Niklas Sorensson").map(&:strip)[1] : "" : "" %></pre>
-    </div>
-
+    
     
 
   </div>
 
+</div>
+
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="form-group">
+      <label for="output">NuSMV Output </label>
+      <pre class="prettyprint linenums code" style="height: 100px; overflow: scroll;"><%= @output != nil ? @output.split("Niklas Sorensson")? @output.split("Niklas Sorensson").map(&:strip)[1] : "" : "" %></pre>
+    </div>
+  </div>
 </div>

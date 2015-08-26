@@ -1,30 +1,22 @@
 
 ASSIGN
 	init(emergency):= FALSE;
+	init(disaster):= FALSE;
 	init(consent):= FALSE;
-	init(records):= FALSE;
-	init(disclosed):= FALSE;
- 
-	init(r1):= physician;
-	init(r2):= hospital;
- 
-	next(r1):= physician;
-	next(r2):= hospital;
- 
-----------------------
--- domain knowledge --
-----------------------
- 
-	next(disclosed):=
-		case
-			records: {TRUE, FALSE}; -- entailment rule --
-			TRUE: FALSE;
-		esac;
- 
-	next(consent):=
-		case
-			consent: TRUE; -- monotonicity rule --
-			TRUE: {TRUE, FALSE};
-		esac;
- 
+	init(swipe_card):= FALSE;
+	init(access_PC):= FALSE;
+	init(logged_in):= FALSE;
+	init(EMR):= FALSE;
+	init(nonpatient_EMR):= FALSE;
+	init(hour):= FALSE;
+	init(day):= FALSE;
+	init(disclose_PHI_family):= FALSE;
+	init(disclose_PHI_online):= FALSE;
+	init(r1):= EP;
+	init(r2):= ED;
+
+	next(hour):= FALSE;
+	next(day):= FALSE;
+	next(r1):= EP;
+	next(r2):= ED;
  
