@@ -140,7 +140,11 @@ class HomeController < ApplicationController
         norm = "\t\t!#{@antecendent[index]}: FALSE; -- from #{@norm_name[index]} --" + "\n\t\t#{@antecendent[index]}: {TRUE, FALSE}; -- from #{@norm_name[index]} --" + "\n\t\tTRUE: {TRUE, FALSE}; -- from #{@norm_name[index]} --"
         antecendent_check = true
       elsif @norm_type[index] == "p"
-        norm = "\t\t#{@antecendent[index]} & !#{@deadline[index]}: FALSE; -- from #{@norm_name[index]} --" + "\n\t\tTRUE: {TRUE, FALSE}; -- from #{@norm_name[index]} --"
+        if @consequent[index] == "disclose_PHI_family" or @consequent[index] == "disclose_PHI_online" or @consequent[index] == "logged_in"
+          norm = "\t\t#{@antecendent[index]} & !#{@deadline[index]}: FALSE; -- from #{@norm_name[index]} --"
+        else
+          norm = "\t\t#{@antecendent[index]} & !#{@deadline[index]}: FALSE; -- from #{@norm_name[index]} --" + "\n\t\tTRUE: {TRUE, FALSE}; -- from #{@norm_name[index]} --"
+        end
       end
           
       @norms[@norm_hash[@consequent[index]]] = @norms[@norm_hash[@consequent[index]]] + "\n" + norm

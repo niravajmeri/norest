@@ -1,8 +1,8 @@
 <!--<h1>Norm Refinement</h1>-->
 <div class="row">
 
-<div class="col-lg-12">
-  <div class="col-lg-4">
+<div class="col-sm-12">
+  <div class="col-sm-12">
     <!--<div class="row">-->
       <h2>Generation</h2>
       <%= form_tag({controller: :home, action: :execute_norm_refinement}, {class: ''}) do %>
@@ -26,33 +26,38 @@
       
       <div class="form-group">
           <label for="model">Generated Model</label>
-          <pre class="prettyprint linenums" style="height: 250px; overflow: scroll;"><%=@model%></pre>
+          <pre class="prettyprint linenums" style="height: 150px; overflow: scroll;"><%=@model%></pre>
           <%#= text_area_tag :model, @model, class: 'form-control',  style: "height: 270px; overflow: scroll;" %>
       </div>
       
     <!--</div>-->
   </div>
-  <div class="col-lg-8">
+</div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+
+  <div class="col-sm-12">
     <h2>Verification</h2>
     <div class="row">
-    <div class="col-lg-6">
-      <%= form_tag({controller: :home, action: :verify_requirements}, {class: ''}) do %>
-      <div class="form-group">
-        <label for="requirements">Requirements</label>
-        <%= hidden_field_tag :norms, @tmp_norms.join("\n")%>
-        <%= text_area_tag :requirements, @requirements.size > 0 ? @requirements : "", class: 'form-control code',  style: "height: 100px; overflow: scroll;" %>
+      <div class="col-sm-6">
+        <%= form_tag({controller: :home, action: :verify_requirements}, {class: ''}) do %>
+        <div class="form-group">
+          <label for="requirements">Requirements</label>
+          <%= hidden_field_tag :norms, @tmp_norms.join("\n")%>
+          <%= text_area_tag :requirements, @requirements.size > 0 ? @requirements : "", class: 'form-control code',  style: "height: 100px; overflow: scroll;" %>
+        </div>
+        <%= submit_tag 'Verify Requirements', class: 'btn btn-info btn-sm' %>
+        <%end%>
       </div>
-      <%= submit_tag 'Verify Requirements', class: 'btn btn-info btn-sm' %>
-    <%end%>
 
-    </div>
-
-    <div class="col-lg-6">
-      <div class="form-group">
-      <label for="requirement_status">Requirement Status</label>
-      <div style="height: 100px; overflow: scroll;">
-      <!--<ol>-->
-      <% @tmp_requirements.each_with_index do|requirement, index| %>
+      <div class="col-sm-6">
+        <div class="form-group">
+        <label for="requirement_status">Requirement Status</label>
+        <div style="height: 100px; overflow: scroll;">
+        <!--<ol>-->
+        <% @tmp_requirements.each_with_index do|requirement, index| %>
         <!--<li>  -->
           <% verified = true %>
           <% if @requirements_status[index] == @requirements_nusmv_status[index]%>
@@ -67,18 +72,17 @@
           <%end%>
           <br/>
         <!--</li>-->
-      <% end %>
+        <% end %>
       <!--</ol>-->
-      </div>
+        </div>
         <%#=@requirements%>
+        </div>
       </div>
- 
     </div>
-  </div>
     
     <hr/>
 
-    <h2>Refinement Patterns</h2>
+    <h2>Revise</h2>
 
     <ul>
       <li>Release of liability</li>
