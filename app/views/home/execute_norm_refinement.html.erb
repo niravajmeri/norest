@@ -33,39 +33,60 @@
   </div>
   <div class="col-lg-6">
     <h2>Verification</h2>
-
-    <%= form_tag({controller: :home, action: :verify_requirements}, {class: ''}) do %>
+    <div class="row">
+    <div class="col-lg-5">
+      <%= form_tag({controller: :home, action: :verify_requirements}, {class: ''}) do %>
       <div class="form-group">
         <label for="requirements">Requirements</label>
         <%= hidden_field_tag :norms, @tmp_norms.join("\n")%>
-        <%= text_area_tag :requirements, @requirements, class: 'form-control',  style: "height: 100px; overflow: scroll;" %>
+        <%= text_area_tag :requirements, @requirements.size > 0 ? @requirements : "", class: 'form-control code',  style: "height: 100px; overflow: scroll;" %>
       </div>
       <%= submit_tag 'Verify Requirements', class: 'btn btn-info btn-sm' %>
     <%end%>
 
-    <div class="form-group">
-      <label for="requirement_status">Requirement Status</label>
-      <ol>
-      <% @tmp_requirements.each_with_index do|requirement, index| %>
-        <li>  
-          <% if @requirements_status[index] == @requirements_nusmv_status[index]%>
-            <i class="glyphicon glyphicon-ok-sign"></i>
-          <% else%> 
-            <i class="glyphicon glyphicon-remove-sign"></i>
-          <% end %>
-          <%=@requirements_spec[index].strip%>: <%=@requirements_status[index]%>. NuSMV Output: <%=@requirements_nusmv_status[index]%>
-        </li>
-      <% end %>
-      </ol>
-        <%#=@requirements%>
+    </div>
 
+    <div class="col-lg-7">
+      <div class="form-group">
+      <label for="requirement_status">Requirement Status</label>
+      <div style="height: 100px; overflow: scroll;">
+      <!--<ol>-->
+      <% @tmp_requirements.each_with_index do|requirement, index| %>
+        <!--<li>  -->
+          <% verified = true %>
+          <% if @requirements_status[index] == @requirements_nusmv_status[index]%>
+            <i class="glyphicon glyphicon-ok-sign text-success"></i>
+          <% else%> 
+            <i class="glyphicon glyphicon-remove-sign text-danger"></i>
+            <% verified = false %>
+          <% end %>
+          <code><%=@requirements_spec[index].strip%>: <%=@requirements_status[index]%>.</code>  <!-- NuSMV: <%=@requirements_nusmv_status[index]%> -->
+          <%if !verified%>
+            <button type="button" class="btn btn-info btn-xs">Refine</button>
+          <%end%>
+          <br/>
+        <!--</li>-->
+      <% end %>
+      <!--</ol>-->
+      </div>
+        <%#=@requirements%>
+      </div>
+ 
     </div>
-    <div class="form-group">
-      <label for="output">NuSMV Output </label>
-      <pre class="prettyprint linenums" style="height: 200px; overflow: scroll;"><%=@output%></pre>
-    </div>
+  </div>
+    
+    <hr/>
 
     <h2>Refinement</h2>
+
+    <hr/>
+
+    <div class="form-group">
+      <label for="output">NuSMV Output </label>
+      <pre class="prettyprint linenums code" style="height: 100px; overflow: scroll; background-color: #CCCCCC; "><%= @output != nil ? @output.split("Niklas Sorensson")? @output.split("Niklas Sorensson").map(&:strip)[1] : "" : "" %></pre>
+    </div>
+
+    
 
   </div>
 
