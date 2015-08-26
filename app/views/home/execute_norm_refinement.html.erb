@@ -61,7 +61,7 @@
             <i class="glyphicon glyphicon-remove-sign text-danger"></i>
             <% verified = false %>
           <% end %>
-          <code><%=@requirements_spec[index].strip%>: <%=@requirements_status[index]%>.</code>  NuSMV: <%=@requirements_nusmv_status[index]%> 
+          <code><%=@requirements_spec[index].strip%>: <%=@requirements_status[index]%>.</code> <!-- NuSMV: <%=@requirements_nusmv_status[index]%> -->
           <%if !verified%>
             <button type="button" class="btn btn-info btn-xs">Refine</button>
           <%end%>
@@ -78,9 +78,20 @@
     
     <hr/>
 
-    <h2>Refinement</h2>
+    <h2>Refinement Patterns</h2>
 
-    
+    <ul>
+      <li>Release of liability</li>
+      <li>Ease of Use</li>
+      <li>Accessibility via reduction</li>
+      <li>Accessibility via allowance</li>
+      <li>Extension</li>
+      <li>Allowance</li>
+      <li>Reduction</li>
+      <li>Compensation</li>
+      <li>Accountability</li>
+
+    </ul>
     
 
   </div>
