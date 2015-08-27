@@ -55,8 +55,8 @@ VAR
 	swipe_card: boolean;
 	access_PC: boolean;
 	logged_in: boolean;
-	EMR: boolean;
-	nonpatient_EMR: boolean;
+	EHR: boolean;
+	nonpatient_EHR: boolean;
 	hour: boolean;
 	day: boolean;
 	disclose_PHI_family: boolean;	

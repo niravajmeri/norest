@@ -6,8 +6,8 @@ ASSIGN
 	init(swipe_card):= FALSE;
 	init(access_PC):= FALSE;
 	init(logged_in):= FALSE;
-	init(EMR):= FALSE;
-	init(nonpatient_EMR):= FALSE;
+	init(EHR):= FALSE;
+	init(nonpatient_EHR):= FALSE;
 	init(hour):= FALSE;
 	init(day):= FALSE;
 	init(disclose_PHI_family):= FALSE;
