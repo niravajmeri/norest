@@ -165,13 +165,13 @@ class HomeController < ApplicationController
 
   next(disclose_PHI_family):=
     case
-      EMR: {TRUE, FALSE}; -- precondition rule --
+      EHR: {TRUE, FALSE}; -- precondition rule --
       TRUE: FALSE;
     esac;
 
   next(disclose_PHI_online):=
     case
-      EMR: {TRUE, FALSE}; -- precondition rule --
+      EHR: {TRUE, FALSE}; -- precondition rule --
       TRUE: FALSE;
     esac;
 =end
@@ -190,15 +190,15 @@ class HomeController < ApplicationController
     end
 
     if @norm_hash["disclose_PHI_family"] != nil
-      @norms[@norm_hash["disclose_PHI_family"]] = @norms[@norm_hash["disclose_PHI_family"]]  + "\n\t\tEMR: {TRUE, FALSE}; -- precondition rule --\n\t\tTRUE: FALSE;"
+      @norms[@norm_hash["disclose_PHI_family"]] = @norms[@norm_hash["disclose_PHI_family"]]  + "\n\t\tEHR: {TRUE, FALSE}; -- precondition rule --\n\t\tTRUE: FALSE;"
     else
-      @norms.push("\nnext(disclose_PHI_family) :=\n\tcase\n\t\tEMR: {TRUE, FALSE}; -- precondition rule --\n\t\tTRUE: FALSE;")
+      @norms.push("\nnext(disclose_PHI_family) :=\n\tcase\n\t\tEHR: {TRUE, FALSE}; -- precondition rule --\n\t\tTRUE: FALSE;")
     end
 
     if @norm_hash["disclose_PHI_online"] != nil
-      @norms[@norm_hash["disclose_PHI_online"]] = @norms[@norm_hash["disclose_PHI_online"]]  + "\n\t\tEMR: {TRUE, FALSE}; -- precondition rule --\n\t\tTRUE: FALSE;"
+      @norms[@norm_hash["disclose_PHI_online"]] = @norms[@norm_hash["disclose_PHI_online"]]  + "\n\t\tEHR: {TRUE, FALSE}; -- precondition rule --\n\t\tTRUE: FALSE;"
     else
-      @norms.push("\nnext(disclose_PHI_online) :=\n\tcase\n\t\tEMR: {TRUE, FALSE}; -- precondition rule --\n\t\tTRUE: FALSE;")
+      @norms.push("\nnext(disclose_PHI_online) :=\n\tcase\n\t\tEHR: {TRUE, FALSE}; -- precondition rule --\n\t\tTRUE: FALSE;")
     end
 
     #if !antecendent_check
