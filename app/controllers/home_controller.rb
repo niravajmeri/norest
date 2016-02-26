@@ -282,7 +282,9 @@ class HomeController < ApplicationController
     @requirements_nusmv_status = Array.new
 
     @output.split("\n").map(&:strip).each do |linewise_output|
+
       if linewise_output != nil and @requirements_spec[counter] != nil and linewise_output.include? @requirements_spec[counter]
+
         #@requirements_nusmv_status[counter] = linewise_output.split(")  is ").map(&:strip)[1]
         @requirements_nusmv_status[counter] = linewise_output.split(@requirements_spec[counter] + "  is").map(&:strip)[1]
         counter = counter + 1
